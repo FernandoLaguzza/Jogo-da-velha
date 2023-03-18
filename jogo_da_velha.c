@@ -29,12 +29,41 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
 int main(void)
 {
     menu();
 
     return 0;
+}
+
+void menu(void)
+{
+    int opcao = 0;
+
+    printf("\t---Escolha um modo de jogo---\n");
+    printf("\t1 - Dois jogadores\n");
+    printf("\t2 - Versus CPU\n");
+    printf("\t3 - Sair\n");
+    scanf("%i", &opcao);
+
+    do
+    {
+        switch(opcao)
+        {
+            case 1:
+                dois_jogadores();
+                break;
+            case 2:
+                escolhaCPU();
+                break;
+            default:
+                printf("Opcao invalida");
+        }
+
+    } while (opcao != 3);
+
 }
 
 void tabuleiro(char casas[3][3])
@@ -47,7 +76,7 @@ void tabuleiro(char casas[3][3])
     printf("\t %c | %c | %c\n", casas[2][0], casas[2][1], casas[2][2]);
 }
 
-void jogo(void)
+void dois_jogadores(void)
 {
     char casas[3][3]; /* casas do tabuleiro*/
     int vez = 0; /*Variavel que determina se a vez é do X ou do O*/
@@ -55,7 +84,7 @@ void jogo(void)
     int l, c = 0; /* numero da coordenada de linhas e colunas */
     int i, j = 0; /* General index*/
     char resposta = ' '; /* variável que armazena a resposta se o jogador deseja ou não jogar novamente*/
-    while(1)
+    do
     {
         for(i = 0; i < 3; i++)
         {
@@ -101,10 +130,163 @@ void jogo(void)
         printf("Deseja jogar novamente?(s/n)");
         scanf("%c", &resposta);
 
-        if(resposta == 'n')
-            return 0;
+    } while(resposta == 's');
+}
 
-    }
+void CPUO(void)
+{
+    char casas[3][3];    /* casas do tabuleiro */
+    int vez = 0;         /* Variavel que determina se a vez é do X ou do O */
+    int jogadas = 1;     /* numero de jogadas */
+    int l, c = 0;        /* numero da coordenada de linhas e colunas */
+    int i, j = 0;        /* General index */
+    char resposta = ' '; /* variável que armazena a resposta se o jogador deseja ou não jogar novamente */
+    do
+    {
+
+        for(i = 0; i < 3; i++)
+        {
+            for(j = 0; j < 3; j++)
+            {
+                casas[i][j] = ' '; /* limpa o tabuleiro dps de cada partida */
+            }
+        }
+        do
+        {
+            tabuleiro(casas);
+            if(vez % 2 == 0)
+            {
+                printf("Digite a linha: ");
+                scanf("%i", &l);
+                printf("Digite a coluna: ");
+                scanf("%i", &c);
+
+                if(l < 1 || c < 1 || l > 3 || c > 3) /* Se o numero da linha ou coluna for menor que 1 ou maior que 3, caracteriza como jogada invalida*/
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else if(casas[l-1][c-1] != ' ') /* Se a casa não estiver vazia, caractecteriza uma jogada invalida */
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else
+                {
+                    casas[l-1][c-1] = 'X';
+                    vez++;
+                    jogadas++;
+
+                }
+
+            }
+            else
+            {
+                srand(time(NULL));
+                l = rand() % 3;
+                c = rand() % 3;
+
+                if(l < 1 || c < 1 || l > 3 || c > 3) /* Se o numero da linha ou coluna for menor que 1 ou maior que 3, caracteriza como jogada invalida*/
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else if(casas[l-1][c-1] != ' ') /* Se a casa não estiver vazia, caractecteriza uma jogada invalida */
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else
+                {
+                    casas[l-1][c-1] = 'O';
+                    vez++;
+                    jogadas++;
+                }
+                
+            }
+
+        }while(vitoria(casas) != 1 || jogadas == 9);
+
+    } while(resposta == 's');
+
+}
+
+void CPUX(void)
+{
+    char casas[3][3];    /* casas do tabuleiro */
+    int vez = 0;         /* Variavel que determina se a vez é do X ou do O */
+    int jogadas = 1;     /* numero de jogadas */
+    int l, c = 0;        /* numero da coordenada de linhas e colunas */
+    int i, j = 0;        /* General index */
+    char resposta = ' '; /* variável que armazena a resposta se o jogador deseja ou não jogar novamente */
+    do
+    {
+
+        for(i = 0; i < 3; i++)
+        {
+            for(j = 0; j < 3; j++)
+            {
+                casas[i][j] = ' '; /* limpa o tabuleiro dps de cada partida */
+            }
+        }
+        do
+        {
+            tabuleiro(casas);
+            if(vez % 2 != 0)
+            {
+                printf("Digite a linha: ");
+                scanf("%i", &l);
+                printf("Digite a coluna: ");
+                scanf("%i", &c);
+
+                if(l < 1 || c < 1 || l > 3 || c > 3) /* Se o numero da linha ou coluna for menor que 1 ou maior que 3, caracteriza como jogada invalida*/
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else if(casas[l-1][c-1] != ' ') /* Se a casa não estiver vazia, caractecteriza uma jogada invalida */
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else
+                {
+                    casas[l-1][c-1] = 'O';
+                    vez++;
+                    jogadas++;
+
+                }
+
+            }
+            else
+            {
+                srand(time(NULL));
+                l = rand() % 3;
+                c = rand() % 3;
+
+                if(l < 1 || c < 1 || l > 3 || c > 3) /* Se o numero da linha ou coluna for menor que 1 ou maior que 3, caracteriza como jogada invalida*/
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else if(casas[l-1][c-1] != ' ') /* Se a casa não estiver vazia, caractecteriza uma jogada invalida */
+                {
+                    l = 0;
+                    c = 0;
+                }
+                else
+                {
+                    casas[l-1][c-1] = 'X';
+                    vez++;
+                    jogadas++;
+                }
+                
+            }
+
+        }while(vitoria(casas) != 1 || jogadas == 9);
+
+    } while(resposta == 's');
+
 }
 
 int vitoria(char casas[3][3])
@@ -195,27 +377,25 @@ int vitoria(char casas[3][3])
     }
 }
 
-void menu(void)
+void escolhaCPU(void)
 {
-   int opcao = 0;
-    do
-    {
-        printf("\t---Escolha um modo de jogo---\n");
-        printf("\t1 - Dois jogadores\n");
-        printf("\t2 - Versus CPU\n");
-        printf("\t3 - Sair\n");
-        scanf("%i", &opcao);
+    char escolha = ' ';  /* variável que armazena a escolha de lado do jogador */
 
-        switch(opcao)
+    printf("Deseja jogar com X ou O? (digite x ou o)");
+    scanf("%c", &escolha);
+
+        switch(escolha)
         {
-            case 1:
-                jogo();
+            case 'x':
+                CPUO();
                 break;
-            case 3:
-                return;
+            case 'o':
+                CPUX();
                 break;
             default:
-                printf("Opcao invalida");
+                printf("opcao invalida");
+                return;
+                break;
         }
-    }while(opcao != 3);
+    
 }
