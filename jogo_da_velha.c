@@ -32,6 +32,7 @@
 
 int main(void)
 {
+    menu();
     jogo();
 
     return 0;
@@ -96,9 +97,124 @@ void jogo(void)
                 jogadas++;
             }
 
-        }while(jogadas <= 9);
+        }while(jogadas <= 9 || vitoria(casas) != 1);
 
         printf("Deseja jogar novamente?(s/n)");
         scanf("%c", &resposta);
     } while(resposta == 's');
+}
+
+int vitoria(char casas[3][3])
+{
+    if(casas[0][0] == 'X' && casas[0][1] == 'X' && casas[0][2] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[1][0] == 'X' && casas[1][1] == 'X' && casas[1][2] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[2][0] == 'X' && casas[2][1] == 'X' && casas[2][2] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[0][0] == 'X' && casas[1][1] == 'X' && casas[2][2] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[0][2] == 'X' && casas[1][1] == 'X' && casas[2][0] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[0][0] == 'X' && casas[1][0] == 'X' && casas[2][0] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[0][1] == 'X' && casas[1][1] == 'X' && casas[2][1] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[0][2] == 'X' && casas[1][2] == 'X' && casas[2][2] == 'X')
+    {
+        printf("Parabens, X venceu!\n");
+        return 1;
+    }
+    if(casas[0][0] == 'O' && casas[0][1] == 'O' && casas[0][2] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    if(casas[1][0] == 'O' && casas[1][1] == 'O' && casas[1][2] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    if(casas[2][0] == 'O' && casas[2][1] == 'O' && casas[2][2] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    if(casas[0][0] == 'O' && casas[1][1] == 'O' && casas[2][2] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    if(casas[0][2] == 'O' && casas[1][1] == 'O' && casas[2][0] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    if(casas[0][0] == 'O' && casas[0][1] == 'O' && casas[0][2] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    if(casas[0][1] == 'O' && casas[1][1] == 'O' && casas[2][1] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    if(casas[0][2] == 'O' && casas[1][2] == 'O' && casas[2][2] == 'O')
+    {
+        printf("Parabens, O venceu!\n");
+        return 1;
+    }
+    else
+    {
+        printf("Deu velha!");
+    }
+}
+
+void menu(void)
+{
+    int opcao = 0;
+    do
+    {
+        /* code */
+    
+    printf("\tEscolha um modo de jogo:\n");
+    printf("\t1 - Dois jogadores\n");
+    printf("\t2 - Versus CPU\n");
+    printf("\n3 - Sair");
+
+    switch(opcao)
+    {
+    case 1:
+        jogo();
+        break;
+    case 2:
+        /* Player vs CPU */
+        break;
+    case 3:
+        return;
+        break;
+    }
+    }while(opcao == 3);
 }
