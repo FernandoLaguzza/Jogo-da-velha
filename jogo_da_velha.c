@@ -33,14 +33,13 @@
 int main(void)
 {
     menu();
-    jogo();
 
     return 0;
 }
 
 void tabuleiro(char casas[3][3])
 {
-    system("cls");
+    system("cls"); /*limpa a tela*/
     printf("\t %c | %c | %c\n", casas[0][0], casas[0][1], casas[0][2]);
     printf("\t-----------\n");
     printf("\t %c | %c | %c\n", casas[1][0], casas[1][1], casas[1][2]);
@@ -56,7 +55,7 @@ void jogo(void)
     int l, c = 0; /* numero da coordenada de linhas e colunas */
     int i, j = 0; /* General index*/
     char resposta = ' '; /* variável que armazena a resposta se o jogador deseja ou não jogar novamente*/
-    do
+    while(1)
     {
         for(i = 0; i < 3; i++)
         {
@@ -97,11 +96,15 @@ void jogo(void)
                 jogadas++;
             }
 
-        }while(jogadas <= 9 || vitoria(casas) != 1);
+        }while(vitoria(casas) != 1 || jogadas == 9);
 
         printf("Deseja jogar novamente?(s/n)");
         scanf("%c", &resposta);
-    } while(resposta == 's');
+
+        if(resposta == 'n')
+            return 0;
+
+    }
 }
 
 int vitoria(char casas[3][3])
@@ -194,27 +197,25 @@ int vitoria(char casas[3][3])
 
 void menu(void)
 {
-    int opcao = 0;
+   int opcao = 0;
     do
     {
-        /* code */
-    
-    printf("\tEscolha um modo de jogo:\n");
-    printf("\t1 - Dois jogadores\n");
-    printf("\t2 - Versus CPU\n");
-    printf("\n3 - Sair");
+        printf("\t---Escolha um modo de jogo---\n");
+        printf("\t1 - Dois jogadores\n");
+        printf("\t2 - Versus CPU\n");
+        printf("\t3 - Sair\n");
+        scanf("%i", &opcao);
 
-    switch(opcao)
-    {
-    case 1:
-        jogo();
-        break;
-    case 2:
-        /* Player vs CPU */
-        break;
-    case 3:
-        return;
-        break;
-    }
-    }while(opcao == 3);
+        switch(opcao)
+        {
+            case 1:
+                jogo();
+                break;
+            case 3:
+                return;
+                break;
+            default:
+                printf("Opcao invalida");
+        }
+    }while(opcao != 3);
 }
